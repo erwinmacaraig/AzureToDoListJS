@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt');
 const User = require("../models/index")['User'];
 const asyncWrapper = require("../utilities/async-wrapper").AsyncWrapper;
 const jsonwebtoken = require("jsonwebtoken");
-const Constants = require("../utilities/constants");
+
 const AuthenticationError = require("../errors/authentication-error");
 const ValidationError = require("../errors/validation-error");
 const ValidatorMiddleware = require("../middleware/validator");
@@ -20,9 +20,9 @@ function generateAccessToken(user) {
     let payload = {
         user: userInfo
     };
-    const token = jsonwebtoken.sign(payload, Constants.authSecret, {
+    const token = jsonwebtoken.sign(payload, process.env.AUTH_SECRET, {
         algorithm: "HS256",
-        issuer: Constants.tokenIssuer,
+        issuer: process.env.TOKEN_ISSUER,
         subject: `${user.id}`
     });
     return token;
