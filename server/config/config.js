@@ -1,6 +1,7 @@
 // const Constants = require("../utilities/constants");
 const Op = require("sequelize").Op;
 const path = require("path");
+const fs = require("fs");
 
 if(process.env.NODE_ENV != "production") {
     require("dotenv").config({
@@ -25,6 +26,13 @@ module.exports = {
         password: process.env.MYSQL_PASSWORD,
         database: process.env.MYSQL_DATABASE,
         host: process.env.MYSQL_HOST,
-        port: process.env.MYSQL_PORT
+        port: process.env.MYSQL_PORT,
+        ssl: true,
+        dialectOptions: {
+            ssl: {
+                encrypt: true,
+                ca: fs.readFileSync(path.resolve(__dirname, "./BaltimoreCyberTrustRoot.crt.pem"))
+            }
+        }
     }
 }

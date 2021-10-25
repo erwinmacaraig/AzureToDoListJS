@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd client&&npm i",
-    "start": "node server/server"
+    "postinstall": "./node_modules/.bin/sequelize db:migrate --config ./server/config/config.js --migrations-path ./server/migrations && cd client&&npm i",
+    "start": "node ./node_modules/.bin/nodemon server/server"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,6 @@
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "cors": "^2.8.4",
-    "dotenv": "^10.0.0",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "joi": "^13.6.0",
